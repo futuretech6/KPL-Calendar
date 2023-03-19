@@ -5,6 +5,9 @@ Get the calendar of KPL schedules.
 ## Get started
 
 ```bash
+# install prerequisites
+pip install pytz requests icalendar
+
 # get schedules of all teams
 python main.py
 

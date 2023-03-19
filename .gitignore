@@ -1,5 +1,8 @@
 # vscode config
 .vscode
 
+# project output
+kpl.ics
+
 # chore
 .DS_Store
