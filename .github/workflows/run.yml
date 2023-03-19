@@ -1,0 +1,23 @@
+name: run
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '18 10 * * 1'  # every 18:18, Monday
+  push:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.8'
+        cache: 'pip'
+    - run: pip install pytz requests icalendar
+    - run: python main.py --team 重庆狼队
+    - uses: actions/upload-artifact@v3
+      with:
+        name: kpl.ics
+        path: kpl.ics
