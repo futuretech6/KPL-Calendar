@@ -14,7 +14,6 @@ jobs:
     - uses: actions/setup-python@v4
       with:
         python-version: '3.8'
-        cache: 'pip'
     - run: pip install pytz requests icalendar
     - run: python main.py --team 重庆狼队
     - uses: actions/upload-artifact@v3
