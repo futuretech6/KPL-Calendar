@@ -24,6 +24,6 @@ python main.py --team all
 
 Use a calendar app to subscribe to the game schedule in this repo.
 
-For example, to subscribe to the game schedule of 重庆狼队, you can subscribe using the link https://github.com/futuretech6/KPL-Calendar/blob/actions/%E9%87%8D%E5%BA%86%E7%8B%BC%E9%98%9F.ics.
+For example, to subscribe to the game schedule of 重庆狼队, you can subscribe using the link https://raw.githubusercontent.com/futuretech6/KPL-Calendar/actions/重庆狼队.ics.
 
 The schedule will be updated every week automatically by GitHub Actions bots.
