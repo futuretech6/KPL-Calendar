@@ -3,12 +3,10 @@ import re
 import sys
 from datetime import datetime, timedelta
 from hashlib import sha256
-from hashlib import sha256
 from typing import Dict, List, Optional, Set, Tuple
 
 import pytz
 import requests
-from icalendar import Calendar, Event, Timezone, TimezoneStandard
 from icalendar import Calendar, Event, Timezone, TimezoneStandard
 
 
@@ -112,16 +110,22 @@ for game in get_game_list():
             kpl_cal.add_component(get_ical_event(hname, gname, match_time))
         elif team == "all":
             if hname in cal_dict:
-                cal_dict[hname].add_component(get_ical_event(hname, gname, match_time))
+                cal_dict[hname].add_component(
+                    get_ical_event(hname, gname, match_time)
+                )
             else:
                 cal_dict[hname] = init_ical(name=hname)
             if gname in cal_dict:
-                cal_dict[gname].add_component(get_ical_event(hname, gname, match_time))
+                cal_dict[gname].add_component(
+                    get_ical_event(hname, gname, match_time)
+                )
             else:
                 cal_dict[gname] = init_ical(name=gname)
         else:
             if team in cal_dict:
-                cal_dict[team].add_component(get_ical_event(hname, gname, match_time))
+                cal_dict[team].add_component(
+                    get_ical_event(hname, gname, match_time)
+                )
             else:
                 cal_dict[team] = init_ical(name=team)
 
