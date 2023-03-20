@@ -24,7 +24,7 @@ jobs:
       run: |
         git config --local user.name ${{ github.actor }}
         git status
-        git add 重庆狼队.ics
+        git add --force 重庆狼队.ics
         git commit -m "update ics"
         git log
     - name: push changes
