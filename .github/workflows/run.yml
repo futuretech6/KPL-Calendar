@@ -25,7 +25,6 @@ jobs:
     #     path: kpl.ics
     - name: commit files
       run: |
-        git config --local user.name ${{ github.actor }}
         git status
         git add --force *.ics
         git commit -m "update ics"
