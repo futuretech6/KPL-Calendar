@@ -76,7 +76,7 @@ def get_ical_event(hname: str, gname: str, match_time: str) -> Event:
     )
     event.add("dtstart", match_datetime)
     event.add("dtend", match_datetime + timedelta(hours=2))
-    event.add("dtstamp", datetime.now())
+    event.add("dtstamp", match_datetime)
     event.add("uid", sha256(event.to_ical()).hexdigest())
     return event
 
