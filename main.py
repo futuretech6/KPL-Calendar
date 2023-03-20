@@ -33,9 +33,7 @@ def get_game_list() -> List[Dict]:
     open_response = requests.get(
         url="https://prod.comp.smoba.qq.com/leaguesite/leagues/open"
     )
-    current_league_id = json.loads(open_response.text)["results"][-1][
-        "cc_league_id"
-    ]
+    current_league_id = json.loads(open_response.text)["results"][-1]["cc_league_id"]
 
     response = requests.get(
         url="https://tga-openapi.tga.qq.com/web/tgabank/getSchedules?seasonid={}".format(
@@ -88,6 +86,9 @@ for game in get_game_list():
 
 if not has_output:
     print("invalid team name, available options: {}".format(teams))
+elif team is not None:
+    with open(team + ".ics", "wb") as f:
+        f.write(cal.to_ical())
 else:
     with open("kpl.ics", "wb") as f:
         f.write(cal.to_ical())
