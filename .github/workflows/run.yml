@@ -15,10 +15,10 @@ jobs:
       with:
         python-version: '3.8'
     - run: pip install pytz requests icalendar
-    - run: |
-        python main.py --team 重庆狼队
-        python main.py --team 北京WB
-        python main.py --team 广州TTG
+    - name: generate ics
+      run: |
+        python main.py --team all
+        python main.py
     # - uses: actions/upload-artifact@v3
     #   with:
     #     name: kpl.ics
