@@ -7,7 +7,7 @@ on:
   push:
 
 jobs:
-  check:
+  uploads:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -16,7 +16,20 @@ jobs:
         python-version: '3.8'
     - run: pip install pytz requests icalendar
     - run: python main.py --team 重庆狼队
-    - uses: actions/upload-artifact@v3
+    # - uses: actions/upload-artifact@v3
+    #   with:
+    #     name: kpl.ics
+    #     path: kpl.ics
+    - name: commit files
+      run: |
+        git config --local user.name ${{ github.actor }}
+        git status
+        git add 重庆狼队.ics
+        git commit -m "update ics"
+        git log
+    - name: push changes
+      uses: ad-m/github-push-action@master
       with:
-        name: kpl.ics
-        path: kpl.ics
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: ${{ github.ref }}
+        force: true
