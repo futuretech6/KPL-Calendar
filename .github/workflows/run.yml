@@ -15,7 +15,10 @@ jobs:
       with:
         python-version: '3.8'
     - run: pip install pytz requests icalendar
-    - run: python main.py --team 重庆狼队
+    - run: |
+      python main.py --team 重庆狼队
+      python main.py --team 北京WB
+      python main.py --team 广州TTG
     # - uses: actions/upload-artifact@v3
     #   with:
     #     name: kpl.ics
@@ -24,7 +27,7 @@ jobs:
       run: |
         git config --local user.name ${{ github.actor }}
         git status
-        git add --force 重庆狼队.ics
+        git add --force *.ics
         git commit -m "update ics"
         git log
     - name: push changes
