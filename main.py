@@ -2,11 +2,12 @@ import json
 import re
 import sys
 from datetime import datetime, timedelta
+from hashlib import sha256
 from typing import Dict, List, Optional, Set, Tuple
 
 import pytz
 import requests
-from icalendar import Calendar, Event, Timezone
+from icalendar import Calendar, Event, Timezone, TimezoneStandard
 
 
 def time_str_to_int(
@@ -33,7 +34,9 @@ def get_game_list() -> List[Dict]:
     open_response = requests.get(
         url="https://prod.comp.smoba.qq.com/leaguesite/leagues/open"
     )
-    current_league_id = json.loads(open_response.text)["results"][-1]["cc_league_id"]
+    current_league_id = json.loads(open_response.text)["results"][-1][
+        "cc_league_id"
+    ]
 
     response = requests.get(
         url="https://tga-openapi.tga.qq.com/web/tgabank/getSchedules?seasonid={}".format(
@@ -54,7 +57,14 @@ cal = Calendar()
 cal.add("prodid", "-//KPL calendar////")
 cal.add("version", "2.0")
 cal_tz = Timezone()
-cal_tz.add("TZID", "Asia/Shanghai")
+cal_tz.add("tzid", "Asia/Shanghai")
+
+cal_tz_sd = TimezoneStandard()
+cal_tz_sd.add("dtstart", datetime(1601, 1, 1))
+cal_tz_sd.add("tzoffsetfrom", timedelta(hours=8))
+cal_tz_sd.add("tzoffsetto", timedelta(hours=8))
+
+cal_tz.add_component(cal_tz_sd)
 cal.add_component(cal_tz)
 
 for game in get_game_list():
@@ -82,6 +92,8 @@ for game in get_game_list():
         )
         event.add("dtstart", match_datetime)
         event.add("dtend", match_datetime + timedelta(hours=2))
+        event.add("dtstamp", datetime.now())
+        event.add("uid", sha256(event.to_ical()).hexdigest())
         cal.add_component(event)
 
 if not has_output:
