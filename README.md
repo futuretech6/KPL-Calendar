@@ -13,4 +13,7 @@ python main.py
 
 # get schedules of only specified team
 python main.py --team 重庆狼队
+
+# get schedules of all teams in separate files
+python main.py --team all
 ```
