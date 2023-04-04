@@ -65,18 +65,18 @@ def init_ical(name: str = "KPL") -> Calendar:
     return cal
 
 
-def get_ical_event(hname: str, gname: str, match_time: str) -> Event:
+def get_ical_event(hname: str, gname: str, match_datetime: datetime) -> Event:
     event = Event()
     event.add("summary", "{}:{}".format(hname, gname))
-    match_time_tuple = time_str_to_int(match_time)
-    match_datetime = (
-        datetime(*match_time_tuple, tzinfo=pytz.timezone("Asia/Shanghai"))
-        if match_time_tuple is not None
-        else datetime.now()
-    )
+    # match_time_tuple = time_str_to_int(match_time)
+    # match_datetime = (
+    #     datetime(*match_time_tuple, tzinfo=pytz.timezone("Asia/Shanghai"))
+    #     if match_time_tuple is not None
+    #     else datetime.now()
+    # )
     event.add("dtstart", match_datetime)
     event.add("dtend", match_datetime + timedelta(hours=2))
-    event.add("dtstamp", match_datetime)
+    event.add("dtstamp", match_datetime)  # avoid changes to ics every time
     event.add("uid", sha256(event.to_ical()).hexdigest())
     return event
 
@@ -94,7 +94,9 @@ cal_dict: Dict[str, Calendar] = {}
 for game in get_game_list():
     hname: str = game["hname"]
     gname: str = game["gname"]
-    match_time: str = game["match_time"]
+    match_time: datetime = datetime.fromtimestamp(  # Tencent is not using utc
+        float(game["match_timestamp"]), tz=pytz.timezone("Asia/Shanghai")
+    )
 
     # add to teams
     teams.add(hname)
