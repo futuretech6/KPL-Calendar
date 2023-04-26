@@ -3,7 +3,7 @@ name: run
 on:
   workflow_dispatch:
   schedule:
-    - cron: '18 10 * * 1'  # every 18:18, Monday
+    - cron: '0 18 * * *'  # every 2:00
   push:
 
 jobs:
