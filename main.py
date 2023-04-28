@@ -135,8 +135,9 @@ if not has_output:
     print("invalid team name, available options: {}".format(teams))
 elif team is not None:
     for team, cal in cal_dict.items():
-        with open(team + ".ics", "wb") as f:
-            f.write(cal.to_ical())
+        if team != "待定":
+            with open(team + ".ics", "wb") as f:
+                f.write(cal.to_ical())
 else:
     with open("kpl.ics", "wb") as f:
         f.write(kpl_cal.to_ical())
