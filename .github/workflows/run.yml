@@ -17,6 +17,7 @@ jobs:
     - run: pip install pytz requests icalendar
     - name: generate ics
       run: |
+        rm *.ics
         python main.py --team all
         python main.py
     # - uses: actions/upload-artifact@v3
