@@ -9,6 +9,7 @@ import pytz
 import requests
 from icalendar import Calendar, Event, Timezone, TimezoneStandard
 
+invalid_team_name: Set[str] = {"腾讯视频", "战至巅峰"}
 
 def time_str_to_int(
     time_str: str,
@@ -94,6 +95,10 @@ cal_dict: Dict[str, Calendar] = {}
 for game in get_game_list():
     hname: str = game["hname"]
     gname: str = game["gname"]
+
+    if hname in invalid_team_name or gname in invalid_team_name:
+        continue
+
     match_time: datetime = datetime.fromtimestamp(  # Tencent is not using utc
         float(game["match_timestamp"]), tz=pytz.timezone("Asia/Shanghai")
     )
