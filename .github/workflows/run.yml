@@ -3,43 +3,43 @@ name: run
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 18 * * *'  # every 2:00
+    - cron: "0 18 * * *" # every 2:00
   push:
 
 jobs:
   uploads:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-python@v4
-      with:
-        python-version: '3.8'
-    - run: pip install -r requirements.txt
-    - name: generate ics
-      run: |
-        rm *.ics
-        python main.py --team all
-        python main.py
-    # - uses: actions/upload-artifact@v3
-    #   with:
-    #     name: kpl.ics
-    #     path: kpl.ics
-    - name: check diff
-      id: verify_diff
-      run: |
-        git diff --quiet . || echo "changed=true" >> $GITHUB_OUTPUT
-    - name: commit files
-      if: steps.verify_diff.outputs.changed == 'true'
-      run: |
-        git config --local user.name actions-bot
-        git status
-        git add -A
-        git commit -m "update ics"
-        git log
-    - name: push changes
-      if: steps.verify_diff.outputs.changed == 'true'
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: ${{ github.ref }}
-        force: true
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.8"
+      - run: pip install -r requirements.txt
+      - name: generate ics
+        run: |
+          rm *.ics
+          python main.py --team all
+          python main.py
+      # - uses: actions/upload-artifact@v3
+      #   with:
+      #     name: kpl.ics
+      #     path: kpl.ics
+      - name: check diff
+        id: verify_diff
+        run: |
+          git diff --quiet . || echo "changed=true" >> $GITHUB_OUTPUT
+      - name: commit files
+        if: steps.verify_diff.outputs.changed == 'true'
+        run: |
+          git config --local user.name actions-bot
+          git status
+          git add -A
+          git commit -m "update ics"
+          git log
+      - name: push changes
+        if: steps.verify_diff.outputs.changed == 'true'
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+          force: true

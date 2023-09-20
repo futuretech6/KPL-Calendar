@@ -11,6 +11,7 @@ from icalendar import Calendar, Event, Timezone, TimezoneStandard
 
 invalid_team_name: Set[str] = {"腾讯视频", "战至巅峰"}
 
+
 def time_str_to_int(
     time_str: str,
 ) -> Optional[Tuple[int, int, int, int, int, int]]:
