@@ -1,6 +1,7 @@
 import json
 import re
 import sys
+import time
 from datetime import datetime, timedelta
 from hashlib import sha256
 from typing import Dict, List, Optional, Set, Tuple
@@ -33,20 +34,37 @@ def time_str_to_int(
 
 
 def get_game_list() -> List[Dict]:
-    open_response = requests.get(
-        url="https://prod.comp.smoba.qq.com/leaguesite/leagues/open"
-    )
-    current_league_id = json.loads(open_response.text)["results"][-1][
-        "cc_league_id"
-    ]
-
-    response = requests.get(
-        url="https://tga-openapi.tga.qq.com/web/tgabank/getSchedules?seasonid={}".format(
-            current_league_id
+    while True:
+        open_response = requests.get(
+            url="https://prod.comp.smoba.qq.com/leaguesite/leagues/open"
         )
-    )
+        if (
+            open_response.status_code == 200
+            and len(leagues := json.loads(open_response.text)["results"]) > 0
+        ):
+            break
+        else:
+            time.sleep(10)
 
-    return json.loads(response.text)["data"]
+    current_league_id = leagues[-1]["cc_league_id"]
+
+    while True:
+        response = requests.get(
+            url="https://tga-openapi.tga.qq.com/web/tgabank/getSchedules?seasonid={}".format(
+                current_league_id
+            )
+        )
+        # `status_code == 200` is not enough
+        # {"msg": "get cache data failed: query db failed", "result": 1002} will also return 200
+        if (
+            response.status_code == 200
+            and (response_text := json.loads(response.text))["result"] == 0
+        ):
+            break
+        else:
+            time.sleep(10)
+
+    return response_text["data"]
 
 
 def init_ical(name: str = "KPL") -> Calendar:
