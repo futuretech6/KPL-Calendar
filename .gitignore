@@ -2,7 +2,7 @@
 .vscode
 
 # project output
-*.ics
+# *.ics
 
 # chore
 .DS_Store
