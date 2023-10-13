@@ -27,7 +27,7 @@ jobs:
       - name: check diff
         id: verify_diff
         run: |
-          if [[ -n $(git status --porcelain) ]]; then echo "changed=true"; fi
+          if [[ -n $(git status --porcelain) ]]; then echo "changed=true" >> $GITHUB_OUTPUT; fi
       - name: commit files
         if: steps.verify_diff.outputs.changed == 'true'
         run: |
