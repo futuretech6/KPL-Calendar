@@ -135,25 +135,22 @@ for game in get_game_list():
         if team is None:
             kpl_cal.add_component(get_ical_event(hname, gname, match_time))
         elif team == "all":
-            if hname in cal_dict:
-                cal_dict[hname].add_component(
-                    get_ical_event(hname, gname, match_time)
-                )
-            else:
+            if hname not in cal_dict:
                 cal_dict[hname] = init_ical(name=hname)
-            if gname in cal_dict:
-                cal_dict[gname].add_component(
-                    get_ical_event(hname, gname, match_time)
-                )
-            else:
+            cal_dict[hname].add_component(
+                get_ical_event(hname, gname, match_time)
+            )
+            if gname not in cal_dict:
                 cal_dict[gname] = init_ical(name=gname)
+            cal_dict[gname].add_component(
+                get_ical_event(hname, gname, match_time)
+            )
         else:
-            if team in cal_dict:
-                cal_dict[team].add_component(
-                    get_ical_event(hname, gname, match_time)
-                )
-            else:
+            if team not in cal_dict:
                 cal_dict[team] = init_ical(name=team)
+            cal_dict[team].add_component(
+                get_ical_event(hname, gname, match_time)
+            )
 
 if not has_output:
     print("invalid team name, available options: {}".format(teams))
