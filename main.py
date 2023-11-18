@@ -46,7 +46,8 @@ def get_game_list() -> List[Dict]:
         else:
             time.sleep(10)
 
-    current_league_id = leagues[-1]["cc_league_id"]
+    # current_league_id = leagues[-1]["cc_league_id"]
+    current_league_id = "KIC2023"
 
     while True:
         response = requests.get(
