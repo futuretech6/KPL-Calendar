@@ -1,6 +1,6 @@
 BEGIN:VCALENDAR
 VERSION:2.0
-PRODID:-//北京WB calendar////
+PRODID:-//金陵科技学院 calendar////
 BEGIN:VTIMEZONE
 TZID:Asia/Shanghai
 BEGIN:STANDARD

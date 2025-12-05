@@ -1,6 +1,6 @@
 BEGIN:VCALENDAR
 VERSION:2.0
-PRODID:-//济南RW侠 calendar////
+PRODID:-//无锡TCG calendar////
 BEGIN:VTIMEZONE
 TZID:Asia/Shanghai
 BEGIN:STANDARD

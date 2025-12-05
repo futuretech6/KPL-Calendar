@@ -1,6 +1,6 @@
 BEGIN:VCALENDAR
 VERSION:2.0
-PRODID:-//长沙TES.A calendar////
+PRODID:-//WD calendar////
 BEGIN:VTIMEZONE
 TZID:Asia/Shanghai
 BEGIN:STANDARD
